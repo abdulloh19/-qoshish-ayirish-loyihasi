@@ -1,4 +1,4 @@
-import { Component, Fragment, useState, useEffect, useCallback } from "react";
+import { Component, Fragment, useState, useEffect, useCallback, useMemo } from "react";
 import CounterItem from "../counter-item/counter-item";
 
 // class User extends Component {
@@ -74,6 +74,13 @@ import CounterItem from "../counter-item/counter-item";
 //   }
 // }
 
+const bigCounterNumber = (number) => {
+  console.log("render");
+  let i = 0;
+  while (i < 100000000) i++;
+  return number * 2;
+};
+
 const User = () => {
   const [counter, setCount] = useState(0);
   const [active, setActive] = useState(true);
@@ -93,11 +100,13 @@ const User = () => {
     color: active ? "green" : "red",
   };
 
+  const number = useMemo(() => bigCounterNumber(counter), [counter]);
+
   return (
     <div className="w-50 mx-auto">
       <div className="border p-3 mt-5">
         <p className="text-center" style={colors}>
-          User activeted {counter}
+          User activeted {number}
         </p>
         <div className="d-flex justify-content-center">
           <button className="btn btn-success" onClick={onIncrement}>
